@@ -1,6 +1,15 @@
+import { Routes, Route, BrowserRouter } from "react-router-dom";
+import SearchPodcast from "./pages/SearchPodcast";
+import ViewPodcast from "./pages/ViewPodcast";
+
 function App() {
   return (
-    <div className="bg-black hover:bg-red-600 h-full w-full">hello world</div>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<SearchPodcast />} />
+        <Route path="/:collectionId" element={<ViewPodcast />} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
