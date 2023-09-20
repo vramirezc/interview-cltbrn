@@ -5,8 +5,9 @@ import { useEffect, useState } from "react";
 import { getPodcasts } from "../utils/getPodcasts";
 
 function SearchPodcast() {
+  const [podcasts, setPodcasts] = useState([]);
   useEffect(() => {
-    getPodcasts();
+    getPodcasts().then((data) => console.log(data));
   }, []);
 
   return (

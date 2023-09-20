@@ -1,6 +1,6 @@
 export async function getPodcasts() {
   const response = await fetch(
-    "https://itunes.apple.com/search?term=podcast&country=ES&media=podcast&entity=podcast"
+    "https://itunes.apple.com/search?term=podcast&country=ES&media=podcast&entity=podcast&limit=50"
   );
   const data = await response.json();
   const collectionIdsURLS = data.results.map(
