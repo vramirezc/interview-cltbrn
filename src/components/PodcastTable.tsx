@@ -10,14 +10,15 @@ import {
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import { Podcast } from "../types";
 import moment from "moment";
+import LoadingSpinner from "./LoadingSpinner";
 
 function PodcastTable({ podcasts }: { podcasts: Podcast[] }) {
   return podcasts.length === 0 ? (
-    <div className="flex justify-center items-center h-[40rem]">loading...</div>
+    <LoadingSpinner />
   ) : (
     <>
       <div className="w-[90%] m-auto">
-        <TableContainer component={Paper} className="mt-2">
+        <TableContainer component={Paper} className="my-5">
           <Table aria-label="simple table">
             <TableHead>
               <TableRow>
