@@ -1,6 +1,12 @@
+declare global {
+  interface Array<T> {
+    toSorted(compareFn: (a: T, b: T) => number): T[];
+  }
+}
+
 export interface PodcastList {
   resultCount: number;
-  results: podcastResult[];
+  results: PodcastResult[];
 }
 
 export interface PodcastResult {
@@ -132,4 +138,11 @@ export interface Podcast {
   inicialTrackAudio: string;
   inicialArtworkUrl160: string;
   episodeIndex: number;
+}
+
+export enum Order {
+  ArtistName = "artistName",
+  trackName = "trackName",
+  ReleaseDate = "releaseDate",
+  none = "none",
 }
