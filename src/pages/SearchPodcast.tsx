@@ -3,11 +3,16 @@ import SearchBar from "../components/SearchBar";
 import OrderBy from "../components/OrderBy";
 import { useEffect, useState } from "react";
 import { getPodcasts } from "../utils/getPodcasts";
+import { Podcast, PodcastListWithDescription } from "../types";
+import { FormatSearchResponse } from "../utils/formatSearchResponse";
+import PodcastTable from "../components/PodcastTable";
 
 function SearchPodcast() {
-  const [podcasts, setPodcasts] = useState([]);
+  const [podcasts, setPodcasts] = useState<Podcast[]>([]);
   useEffect(() => {
-    getPodcasts().then((data) => console.log(data));
+    getPodcasts().then((data: PodcastListWithDescription[]) =>
+      setPodcasts(FormatSearchResponse(data))
+    );
   }, []);
 
   return (
@@ -16,6 +21,7 @@ function SearchPodcast() {
         <SearchBar />
         <OrderBy />
       </Container>
+      <PodcastTable podcasts={podcasts} />
     </div>
   );
 }
