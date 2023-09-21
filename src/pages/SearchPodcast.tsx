@@ -10,13 +10,18 @@ import { Order, Podcast, PodcastListWithDescription } from "../types";
 
 function SearchPodcast() {
   const [order, setOrder] = useState<Order>(Order.none);
+  const [search, setSearch] = useState<string | null>(null);
   const [podcasts, setPodcasts] = useState<Podcast[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
-    getPodcasts().then((data: PodcastListWithDescription[]) =>
-      setPodcasts(FormatSearchResponse(data))
-    );
-  }, []);
+    getPodcasts(search)
+      .then((data: PodcastListWithDescription[]) =>
+        setPodcasts(FormatSearchResponse(data))
+      )
+      .catch((err) => console.log(err.message))
+      .finally(() => setLoading(false));
+  }, [search]);
 
   const sortedPodcasts = useMemo(
     () => sortList(podcasts, order),
@@ -26,10 +31,10 @@ function SearchPodcast() {
   return (
     <div className="bg-gradient-to-r from-[#1B1B1B] to-[#14151F] text-white w-full min-h-screen h-fill pt-8">
       <Container maxWidth="md">
-        <SearchBar />
+        <SearchBar setSearch={setSearch} />
         <OrderBy setOrder={setOrder} order={order} />
       </Container>
-      <PodcastTable podcasts={sortedPodcasts} />
+      <PodcastTable loading={loading} podcasts={sortedPodcasts} />
     </div>
   );
 }

@@ -1,7 +1,12 @@
 import { Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
+import { Dispatch, SetStateAction } from "react";
 
-function SearchBar() {
+function SearchBar({
+  setSearch,
+}: {
+  setSearch: Dispatch<SetStateAction<string | null>>;
+}) {
   return (
     <div>
       <Box
@@ -13,7 +18,14 @@ function SearchBar() {
         className="bg-stone-800 rounded-full px-2 py-1 flex items-center w-full"
       >
         <SearchIcon />
-        <form className="bg-stone-800 ml-2 flex-grow w-full h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
+        <form
+          className="bg-stone-800 ml-2 flex-grow w-full h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
+          onSubmit={(e) => {
+            e.preventDefault();
+            const inputTarget = e.target as unknown as HTMLFormElement[];
+            setSearch(inputTarget[0].value);
+          }}
+        >
           <input
             className="bg-stone-800 ml-2 flex-grow w-full h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
             type="text"

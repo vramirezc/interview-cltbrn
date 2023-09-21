@@ -1,7 +1,7 @@
 import { Order, Podcast } from "../types";
 
 export function sortList(list: Podcast[], order: Order) {
-  if (order === "none") return list;
+  if (order === "") return list;
   return list.toSorted((a: Podcast, b: Podcast) => {
     if (order === "releaseDate") {
       const da = new Date(a[order]) as any;

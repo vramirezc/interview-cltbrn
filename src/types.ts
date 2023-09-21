@@ -144,5 +144,5 @@ export enum Order {
   ArtistName = "artistName",
   trackName = "trackName",
   ReleaseDate = "releaseDate",
-  none = "none",
+  none = "",
 }

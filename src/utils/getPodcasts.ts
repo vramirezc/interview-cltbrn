@@ -1,8 +1,10 @@
 import { PodcastList, PodcastResult } from "../types";
 
-export async function getPodcasts() {
+export async function getPodcasts(search: string | null) {
   const response = await fetch(
-    "https://itunes.apple.com/search?term=podcast&country=ES&media=podcast&entity=podcast&limit=50"
+    `https://itunes.apple.com/search?term=${
+      search == null ? "podcast" : search
+    }&country=ES&media=podcast&entity=podcast&limit=50`
   );
   const data: PodcastList = await response.json();
   const collectionIdsURLS = data.results.map(
