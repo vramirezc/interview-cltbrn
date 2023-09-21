@@ -6,18 +6,21 @@ import reportWebVitals from "./reportWebVitals";
 import Player from "./components/Player";
 import { SelectedPodcastProvider } from "./providers/SelectedPodcastProvider";
 import { ThemeProvider } from "@emotion/react";
-import { CssBaseline } from "@mui/material";
-import { useDarkTheme } from "./hooks/useDarkTheme";
+import { CssBaseline, createTheme } from "@mui/material";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
 
-const theme = useDarkTheme();
-
 root.render(
   <React.StrictMode>
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={darkTheme}>
       <CssBaseline />
       <SelectedPodcastProvider>
         <App />

@@ -1,5 +1,5 @@
 import React, { createContext, useState } from "react";
-import { Episode } from "../types";
+import { Episode, Podcast } from "../types";
 
 type podcast = {
   collectionId?: number;
@@ -12,7 +12,7 @@ type podcast = {
   inicialTrackAudio?: string;
   inicialArtworkUrl160?: string;
   episodeIndex?: number;
-  episodes?: Episode[];
+  episodes?: Episode[] | Podcast[];
 };
 
 type contextProps = {

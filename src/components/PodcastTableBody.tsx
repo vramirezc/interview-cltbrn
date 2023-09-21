@@ -1,11 +1,35 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import moment from "moment";
 import { Podcast } from "../types";
 import { useNavigate } from "react-router-dom";
+import { useSelectedPodcast } from "../hooks/useSelectedPodcast";
 
 function PodcastTableBody({ podcasts }: { podcasts: Podcast[] }) {
   const navigate = useNavigate();
+  const { selectedPodcast, setSelectedPodcast, setLoading } =
+    useSelectedPodcast();
+
+  const togglePlay = (
+    e: React.MouseEvent<HTMLTableCellElement, MouseEvent>,
+    row: Podcast,
+    rows: Podcast[]
+  ) => {
+    e.stopPropagation();
+    if (selectedPodcast.collectionId !== row.collectionId) {
+      setLoading(true);
+    }
+    setSelectedPodcast({
+      ...row,
+      episodes: rows,
+      playing:
+        selectedPodcast.collectionId === row.collectionId
+          ? !selectedPodcast.playing
+          : true,
+    });
+  };
+
   return (
     <TableBody>
       {podcasts.map((row: Podcast) => (
@@ -18,8 +42,16 @@ function PodcastTableBody({ podcasts }: { podcasts: Podcast[] }) {
           }}
           onClick={() => navigate(`/${row.collectionId}`)}
         >
-          <TableCell>
-            <PlayArrowIcon className="hover:bg-gray-500 rounded-full" />
+          <TableCell onClick={(e) => togglePlay(e, row, podcasts)}>
+            {selectedPodcast.collectionId === row.collectionId &&
+            selectedPodcast.playing === true ? (
+              <PauseCircleIcon
+                sx={{ color: "#5C67DE" }}
+                className="hover:bg-white rounded-full"
+              />
+            ) : (
+              <PlayArrowIcon className="hover:bg-gray-500 rounded-full" />
+            )}
           </TableCell>
           <TableCell>
             <div className="flex items-center gap-3 w-50 ">
