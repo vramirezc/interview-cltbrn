@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getPodcasts } from "../utils/getPodcasts";
 import { FormatSearchResponse } from "../utils/formatSearchResponse";
 import PodcastTable from "../components/PodcastTable";
-import { sortList } from "../utils/sortPodcast";
+import { sortList } from "../utils/SortPodcast";
 import { Order, Podcast, PodcastListWithDescription } from "../types";
 
 function SearchPodcast() {

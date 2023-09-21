@@ -6,7 +6,7 @@ import { Container } from "@mui/material";
 import SearchEpisodeBar from "../components/SearchEpisodeBar";
 import { formatEpisodes } from "../utils/formatEpisodes";
 import OrderEpisodeBy from "../components/OrderEpisodeBy";
-import { sortList } from "../utils/sortPodcast";
+import { sortList } from "../utils/SortPodcast";
 import EpisodeTable from "../components/EpisodeTable";
 
 function ViewPodcast() {
