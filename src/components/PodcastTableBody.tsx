@@ -8,7 +8,7 @@ import { useSelectedPodcast } from "../hooks/useSelectedPodcast";
 
 function PodcastTableBody({ podcasts }: { podcasts: Podcast[] }) {
   const navigate = useNavigate();
-  const { selectedPodcast, setSelectedPodcast, setLoading } =
+  const { selectedPodcast, setLoading, setSelectedPodcast } =
     useSelectedPodcast();
 
   const togglePlay = (
@@ -17,14 +17,14 @@ function PodcastTableBody({ podcasts }: { podcasts: Podcast[] }) {
     rows: Podcast[]
   ) => {
     e.stopPropagation();
-    if (selectedPodcast.collectionId !== row.collectionId) {
+    if (selectedPodcast.collectionId !== row?.collectionId) {
       setLoading(true);
     }
     setSelectedPodcast({
       ...row,
       episodes: rows,
       playing:
-        selectedPodcast.collectionId === row.collectionId
+        selectedPodcast.collectionId === row?.collectionId
           ? !selectedPodcast.playing
           : true,
     });

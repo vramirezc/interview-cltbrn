@@ -1,10 +1,29 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import PauseCircleIcon from "@mui/icons-material/PauseCircle";
 import { Episode } from "../types";
 import { millisToMinutesAndSeconds } from "../utils/millisToMinutesAndSeconds";
 import moment from "moment";
+import { useSelectedPodcast } from "../hooks/useSelectedPodcast";
 
 function EpisodeTableBody({ episodes }: { episodes: Episode[] }) {
+  const { selectedPodcast, setSelectedPodcast, setLoading } =
+    useSelectedPodcast();
+
+  const togglePlay = (row: Episode) => {
+    if (selectedPodcast.trackId !== row.trackId) {
+      setLoading(true);
+    }
+    setSelectedPodcast({
+      ...row,
+      episodes: episodes,
+      playing:
+        selectedPodcast.trackId === row.trackId
+          ? !selectedPodcast.playing
+          : true,
+    });
+  };
+
   return (
     <TableBody>
       {episodes.map((row, index) => (
@@ -16,8 +35,16 @@ function EpisodeTableBody({ episodes }: { episodes: Episode[] }) {
           }}
         >
           <TableCell>
-            <div className="flex items-center">
-              <PlayArrowIcon className="cursor-pointer hover:bg-gray-500 rounded-full" />
+            <div className="flex items-center" onClick={() => togglePlay(row)}>
+              {selectedPodcast.trackId === row.trackId &&
+              selectedPodcast.playing === true ? (
+                <PauseCircleIcon
+                  sx={{ color: "#5C67DE" }}
+                  className="cursor-pointer hover:bg-white rounded-full"
+                />
+              ) : (
+                <PlayArrowIcon className="cursor-pointer hover:bg-gray-500 rounded-full" />
+              )}
             </div>
           </TableCell>
           <TableCell>

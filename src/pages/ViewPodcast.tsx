@@ -47,6 +47,7 @@ function ViewPodcast() {
           className="object-cover w-full h-60 rounded-xl mt-4"
         />
         <OrderEpisodeBy
+          episodes={filteredEpisodes}
           order={order}
           setOrder={setOrder}
           collectionInfo={collectionInfo}
