@@ -1,25 +1,24 @@
 import { TableBody, TableCell, TableRow } from "@mui/material";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
+import { Episode } from "../types";
+import { millisToMinutesAndSeconds } from "../utils/millisToMinutesAndSeconds";
 import moment from "moment";
-import { Podcast } from "../types";
-import { useNavigate } from "react-router-dom";
 
-function PodcastTableBody({ podcasts }: { podcasts: Podcast[] }) {
-  const navigate = useNavigate();
+function EpisodeTableBody({ episodes }: { episodes: Episode[] }) {
   return (
     <TableBody>
-      {podcasts.map((row: Podcast) => (
+      {episodes.map((row, index) => (
         <TableRow
-          className="cursor-pointer"
-          key={row.collectionId}
+          key={row.trackId}
           sx={{
             "&:hover": { backgroundColor: "black" },
             "&:last-child td, &:last-child th": { border: 0 },
           }}
-          onClick={() => navigate(`/${row.collectionId}`)}
         >
           <TableCell>
-            <PlayArrowIcon className="hover:bg-gray-500 rounded-full" />
+            <div className="flex items-center">
+              <PlayArrowIcon className="cursor-pointer hover:bg-gray-500 rounded-full" />
+            </div>
           </TableCell>
           <TableCell>
             <div className="flex items-center gap-3 w-50 ">
@@ -36,10 +35,15 @@ function PodcastTableBody({ podcasts }: { podcasts: Podcast[] }) {
           <TableCell>
             <p className="text-white/30">{moment(row.releaseDate).fromNow()}</p>
           </TableCell>
+          <TableCell>
+            <p className="text-white/30">
+              {millisToMinutesAndSeconds(row.duration)}
+            </p>
+          </TableCell>
         </TableRow>
       ))}
     </TableBody>
   );
 }
 
-export default PodcastTableBody;
+export default EpisodeTableBody;

@@ -14,16 +14,12 @@ function PodcastTable({
   return loading ? (
     <LoadingSpinner />
   ) : (
-    <>
-      <div className="w-[90%] m-auto">
-        <TableContainer component={Paper} className="my-5">
-          <Table aria-label="simple table">
-            <PodcastTableHead />
-            <PodcastTableBody podcasts={podcasts} />
-          </Table>
-        </TableContainer>
-      </div>
-    </>
+    <TableContainer component={Paper} className="my-5">
+      <Table aria-label="simple table">
+        <PodcastTableHead />
+        <PodcastTableBody podcasts={podcasts} />
+      </Table>
+    </TableContainer>
   );
 }
 

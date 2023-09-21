@@ -5,7 +5,7 @@ import { useEffect, useMemo, useState } from "react";
 import { getPodcasts } from "../utils/getPodcasts";
 import { FormatSearchResponse } from "../utils/formatSearchResponse";
 import PodcastTable from "../components/PodcastTable";
-import { sortList } from "../utils/SortPodcast";
+import { sortList } from "../utils/sortPodcast";
 import { Order, Podcast, PodcastListWithDescription } from "../types";
 
 function SearchPodcast() {
@@ -33,8 +33,8 @@ function SearchPodcast() {
       <Container maxWidth="md">
         <SearchBar setSearch={setSearch} />
         <OrderBy setOrder={setOrder} order={order} />
+        <PodcastTable loading={loading} podcasts={sortedPodcasts} />
       </Container>
-      <PodcastTable loading={loading} podcasts={sortedPodcasts} />
     </div>
   );
 }
