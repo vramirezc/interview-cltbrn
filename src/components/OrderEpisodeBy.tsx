@@ -43,7 +43,7 @@ function OrderEpisodeBy({
         onClick={() => togglePlay(episodes)}
       >
         {selectedPodcast.playing &&
-        selectedPodcast.collectionId === episodes[0].collectionId ? (
+        selectedPodcast.collectionId === collectionInfo?.collectionId ? (
           <PauseCircleIcon sx={{ fontSize: 60, color: "#5C67DE" }} />
         ) : (
           <PlayCircleFilledIcon sx={{ fontSize: 60, color: "#5C67DE" }} />

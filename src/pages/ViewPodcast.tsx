@@ -8,6 +8,7 @@ import { formatEpisodes } from "../utils/formatEpisodes";
 import OrderEpisodeBy from "../components/OrderEpisodeBy";
 import { sortList } from "../utils/SortPodcast";
 import EpisodeTable from "../components/EpisodeTable";
+import LoadingSpinner from "../components/LoadingSpinner";
 
 function ViewPodcast() {
   const { collectionId } = useParams();
@@ -15,13 +16,19 @@ function ViewPodcast() {
   const [collectionInfo, setCollectionInfo] = useState<EpisodeResult | null>(
     null
   );
+  const [loading, setLoading] = useState(false);
   const [order, setOrder] = useState<Order>(Order.none);
   const [searchEpisodeInput, setSearchEpisodeInput] = useState<string>("");
+
   useEffect(() => {
-    getEpisodes(collectionId!).then((data) => {
-      setCollectionInfo(data[0]);
-      setEpisodes(formatEpisodes(data.slice(1)));
-    });
+    setLoading(true);
+    getEpisodes(collectionId!)
+      .then((data) => {
+        setCollectionInfo(data[0]);
+        setEpisodes(formatEpisodes(data.slice(1)));
+      })
+      .catch((err) => console.log(err.message))
+      .finally(() => setLoading(false));
   }, []);
 
   const sortedEpisodes = useMemo(() => {
@@ -42,17 +49,23 @@ function ViewPodcast() {
     <div className="bg-gradient-to-r from-[#1B1B1B] to-[#14151F] text-white w-full min-h-screen h-fill pt-8">
       <Container maxWidth="md">
         <SearchEpisodeBar setSearchEpisodeInput={setSearchEpisodeInput} />
-        <img
-          src={collectionInfo?.artworkUrl600}
-          className="object-cover w-full h-60 rounded-xl mt-4"
-        />
-        <OrderEpisodeBy
-          episodes={filteredEpisodes}
-          order={order}
-          setOrder={setOrder}
-          collectionInfo={collectionInfo}
-        />
-        <EpisodeTable episodes={filteredEpisodes} />
+        {loading ? (
+          <LoadingSpinner />
+        ) : (
+          <>
+            <img
+              src={collectionInfo?.artworkUrl600}
+              className="object-cover w-full h-60 rounded-xl mt-4"
+            />
+            <OrderEpisodeBy
+              episodes={filteredEpisodes}
+              order={order}
+              setOrder={setOrder}
+              collectionInfo={collectionInfo}
+            />
+            <EpisodeTable episodes={filteredEpisodes} />
+          </>
+        )}
       </Container>
     </div>
   );

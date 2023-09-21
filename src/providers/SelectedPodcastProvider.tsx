@@ -1,5 +1,10 @@
-import React, { createContext, useState } from "react";
-import { Episode, EpisodeResult, Podcast } from "../types";
+import React, {
+  Dispatch,
+  SetStateAction,
+  createContext,
+  useState,
+} from "react";
+import { Episode, EpisodeResult, Order, Podcast } from "../types";
 
 type podcast = {
   collectionId?: number;
@@ -20,8 +25,8 @@ type contextProps = {
   setSelectedPodcast: (value: podcast) => void;
   loading: boolean;
   setLoading: (value: boolean) => void;
-  searchInput: string;
-  setSearchInput: (Input: string) => void;
+  searchInput: string | null;
+  setSearchInput: Dispatch<SetStateAction<string | null>>;
 };
 
 const initialContext: contextProps = {
@@ -42,7 +47,7 @@ export const SelectedPodcastProvider = ({
   children: React.ReactNode;
 }) => {
   const [selectedPodcast, setSelectedPodcast] = useState<podcast>({});
-  const [searchInput, setSearchInput] = useState<string>("");
+  const [searchInput, setSearchInput] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
 
   return (

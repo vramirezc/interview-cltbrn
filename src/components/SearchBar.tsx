@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import SearchIcon from "@mui/icons-material/Search";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, RefObject, SetStateAction } from "react";
 
 function SearchBar({
   setSearch,
