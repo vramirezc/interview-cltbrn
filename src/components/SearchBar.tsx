@@ -17,8 +17,9 @@ function SearchBar({
         }}
         className="bg-stone-800 rounded-full px-2 py-1 flex items-center w-full"
       >
-        <SearchIcon />
+        <SearchIcon aria-label="searchIcon" />
         <form
+          aria-label="searchBarForm"
           className="bg-stone-800 ml-2 flex-grow w-full h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
           onSubmit={(e) => {
             e.preventDefault();
@@ -26,7 +27,10 @@ function SearchBar({
             setSearch(inputTarget[0].value);
           }}
         >
+          <label htmlFor="searchBarInput" className="hidden" />
           <input
+            id="searchBarInput"
+            aria-label="searchBarInput"
             className="bg-stone-800 ml-2 flex-grow w-full h-10 px-5 pr-10 rounded-full text-sm focus:outline-none"
             type="text"
             placeholder="podcast"

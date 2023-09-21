@@ -62,6 +62,63 @@ const Player = () => {
     setSelectedPodcast({ ...selectedPodcast, playing: true });
   }
 
+  const handleShuffle = () => {
+    const randomIndex = Math.floor(
+      Math.random() * selectedPodcast.episodes?.length!
+    );
+    if (randomIndex !== selectedPodcast.episodeIndex) {
+      setLoading(true);
+      setSelectedPodcast({
+        ...selectedPodcast.episodes?.[randomIndex],
+        episodes: selectedPodcast.episodes,
+        playing: true,
+      });
+    } else {
+      replay();
+      setSelectedPodcast({
+        ...selectedPodcast,
+        playing: true,
+      });
+    }
+  };
+
+  const handlePrevious = () => {
+    setLoading(true);
+    if (selectedPodcast.episodeIndex !== 0) {
+      setSelectedPodcast({
+        ...selectedPodcast.episodes?.[selectedPodcast.episodeIndex! - 1],
+        episodes: selectedPodcast.episodes,
+        playing: true,
+      });
+    } else {
+      setSelectedPodcast({
+        ...selectedPodcast.episodes?.[selectedPodcast.episodes.length! - 1],
+        episodes: selectedPodcast.episodes,
+        playing: true,
+      });
+    }
+  };
+
+  const handleNext = () => {
+    setLoading(true);
+    if (
+      selectedPodcast.episodeIndex !==
+      selectedPodcast.episodes?.length! - 1
+    ) {
+      setSelectedPodcast({
+        ...selectedPodcast.episodes?.[selectedPodcast.episodeIndex! + 1],
+        episodes: selectedPodcast.episodes,
+        playing: true,
+      });
+    } else {
+      setSelectedPodcast({
+        ...selectedPodcast.episodes?.[0],
+        episodes: selectedPodcast.episodes,
+        playing: true,
+      });
+    }
+  };
+
   useEffect(() => {
     if (selectedPodcast.trackId) {
       togglePlay();
@@ -92,50 +149,13 @@ const Player = () => {
       <div className="flex gap-6 items-center">
         <div
           className="cursor-pointer hover:bg-gray-500 rounded-full"
-          onClick={() => {
-            const randomIndex = Math.floor(
-              Math.random() * selectedPodcast.episodes?.length!
-            );
-            if (randomIndex !== selectedPodcast.episodeIndex) {
-              setLoading(true);
-              setSelectedPodcast({
-                ...selectedPodcast.episodes?.[randomIndex],
-                episodes: selectedPodcast.episodes,
-                playing: true,
-              });
-            } else {
-              replay();
-              setSelectedPodcast({
-                ...selectedPodcast,
-                playing: true,
-              });
-            }
-          }}
+          onClick={handleShuffle}
         >
           <ShuffleIcon fontSize="large" />
         </div>
         <div
           className="cursor-pointer hover:bg-gray-500 rounded-full"
-          onClick={() => {
-            setLoading(true);
-            if (selectedPodcast.episodeIndex !== 0) {
-              setSelectedPodcast({
-                ...selectedPodcast.episodes?.[
-                  selectedPodcast.episodeIndex! - 1
-                ],
-                episodes: selectedPodcast.episodes,
-                playing: true,
-              });
-            } else {
-              setSelectedPodcast({
-                ...selectedPodcast.episodes?.[
-                  selectedPodcast.episodes.length! - 1
-                ],
-                episodes: selectedPodcast.episodes,
-                playing: true,
-              });
-            }
-          }}
+          onClick={handlePrevious}
         >
           <SkipPreviousIcon fontSize="large" />
         </div>
@@ -156,27 +176,7 @@ const Player = () => {
         </div>
         <div
           className="cursor-pointer hover:bg-gray-500 rounded-full"
-          onClick={() => {
-            setLoading(true);
-            if (
-              selectedPodcast.episodeIndex !==
-              selectedPodcast.episodes?.length! - 1
-            ) {
-              setSelectedPodcast({
-                ...selectedPodcast.episodes?.[
-                  selectedPodcast.episodeIndex! + 1
-                ],
-                episodes: selectedPodcast.episodes,
-                playing: true,
-              });
-            } else {
-              setSelectedPodcast({
-                ...selectedPodcast.episodes?.[0],
-                episodes: selectedPodcast.episodes,
-                playing: true,
-              });
-            }
-          }}
+          onClick={handleNext}
         >
           <SkipNextIcon fontSize="large" />
         </div>
